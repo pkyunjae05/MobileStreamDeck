@@ -11,8 +11,11 @@ constexpr uint8_t  REQ_START_ACCESSORY = 53;
 // Google AOA VID/PID
 constexpr uint16_t GOOGLE_VID          = 0x18D1;
 constexpr uint16_t SAMSUNG_VID         = 0x04E8;
-constexpr uint16_t PID_ACCESSORY       = 0x2D01;
-constexpr uint16_t PID_ACCESSORY_ADB   = 0x2D00;
+// [FIX] 공식 AOA 스펙 기준으로 값 교정: 0x2D00 = Accessory only, 0x2D01 = Accessory + ADB
+//       (기존 코드는 두 값이 뒤바뀌어 있었음. isAoaDevice()가 두 값을 모두 허용해서
+//        동작 자체에는 영향 없었지만, 라벨이 반대라 로그/디버깅 시 혼동을 유발함)
+constexpr uint16_t PID_ACCESSORY       = 0x2D00;
+constexpr uint16_t PID_ACCESSORY_ADB   = 0x2D01;
 
 // String indices
 constexpr uint16_t STR_MANUFACTURER = 0;

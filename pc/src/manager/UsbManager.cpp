@@ -34,10 +34,29 @@ void UsbManager::shutdown() {
     m_initialized.store(false);
 }
 
+// [ADD] 열린 핸들이 "진짜 살아있는지"를 실제 컨트롤 요청으로 검증.
+//       libusb_open()이 성공해도 Windows 재열거 과도기의 디바이스는
+//       바로 다음 호출에서 LIBUSB_ERROR_NO_DEVICE를 반환할 수 있음.
+static bool isHandleAlive(libusb_device_handle* handle) {
+    if (!handle) return false;
+    uint8_t buf[2] = {0};
+    // GET_PROTOCOL은 부작용 없는 vendor request이므로 생존 확인용으로 재사용
+    int rc = libusb_control_transfer(
+        handle,
+        LIBUSB_ENDPOINT_IN | LIBUSB_REQUEST_TYPE_VENDOR,
+        aoa::REQ_GET_PROTOCOL,
+        0, 0, buf, 2, 300 /*ms*/
+    );
+    return rc >= 0;
+}
+
 bool UsbManager::connectToDevice() {
     LOG_INFO("[connectToDevice]");
-    std::lock_guard<std::mutex> lock(m_connectMutex);
-    if (m_connected.load()) return true;
+
+    {
+        std::lock_guard<std::mutex> lock(m_connectMutex);
+        if (m_connected.load()) return true;
+    }
 
     LOG_INFO("Initiating USB connection sequence...");
 
@@ -51,42 +70,39 @@ bool UsbManager::connectToDevice() {
     libusb_device_handle* handle = nullptr;
     bool isAoa = false;
 
-    // 1. 전체 USB 장치 목록을 순회하며 실제로 열 수 있는 Android 장치 노드 탐색
     for (ssize_t i = 0; i < cnt; ++i) {
         libusb_device_descriptor desc{};
         if (libusb_get_device_descriptor(list[i], &desc) != 0) continue;
 
         if (protocol::AoaProtocol::isAndroidDevice(desc.idVendor)) {
-            LOG_INFO("[connectToDevice] Trying to open Android Device at index: %d (VID: 0x%04X, PID: 0x%04X)", 
+            LOG_INFO("[connectToDevice] Trying to open Android Device at index: %d (VID: 0x%04X, PID: 0x%04X)",
                      (int)i, desc.idVendor, desc.idProduct);
 
             int rc = libusb_open(list[i], &handle);
             if (rc == 0) {
                 isAoa = protocol::AoaProtocol::isAoaDevice(desc.idVendor, desc.idProduct);
-                LOG_INFO("[connectToDevice] Successfully opened device at index %d (isAoa: %s)", 
+                LOG_INFO("[connectToDevice] Successfully opened device at index %d (isAoa: %s)",
                          (int)i, isAoa ? "YES" : "NO");
-                break; // 오픈 성공 시 루프 탈출
+                break;
             } else {
-                LOG_WARN("Failed to open device at index %d (err: %d - %s), trying next node...", 
+                LOG_WARN("Failed to open device at index %d (err: %d - %s), trying next node...",
                          (int)i, rc, libusb_strerror((libusb_error)rc));
             }
         }
     }
-    
+
     libusb_free_device_list(list, 1);
 
-    // 조건 1: 접근 가능한 안드로이드 기기 핸들을 찾지 못한 경우
     if (!handle) {
         notifyError(-1, "No accessible Android device handle found.");
         return false;
     }
 
-    // 조건 2: AOA 모드가 아닌 경우 전환 요청 수행
     if (!isAoa) {
         LOG_INFO("Regular Android device found. Sending AOA transition request...");
-        
+
         bool transitionOk = protocol::AoaProtocol::requestAccessoryMode(handle);
-        libusb_close(handle); 
+        libusb_close(handle);
         handle = nullptr;
 
         if (!transitionOk) {
@@ -94,26 +110,41 @@ bool UsbManager::connectToDevice() {
             return false;
         }
 
-        // 재연결 대기 및 AOA 모드로 변신한 기기 재탐색
-        std::this_thread::sleep_for(500ms); 
-        for (int retry = 0; retry < 20; ++retry) {
-            cnt = libusb_get_device_list(m_ctx, &list);
-            if (cnt >= 0) {
-                for (ssize_t i = 0; i < cnt; ++i) {
+        std::this_thread::sleep_for(500ms);
+
+        // [FIX] 기존: "열리기만 하면" 바로 확정 → NO_DEVICE 핸들을 그대로 사용하는 원인이었음.
+        //       변경: 열고 나서 isHandleAlive()로 실제 생존 여부를 검증.
+        //       죽은 핸들이면 즉시 버리고 처음부터 다시 스캔 (최대 40회 x 250ms = 최대 10초 대기).
+        const int MAX_RETRY = 40;
+        for (int retry = 0; retry < MAX_RETRY && !handle; ++retry) {
+            libusb_device** list2 = nullptr;
+            ssize_t cnt2 = libusb_get_device_list(m_ctx, &list2);
+            if (cnt2 >= 0) {
+                for (ssize_t i = 0; i < cnt2; ++i) {
                     libusb_device_descriptor desc{};
-                    if (libusb_get_device_descriptor(list[i], &desc) != 0) continue;
+                    if (libusb_get_device_descriptor(list2[i], &desc) != 0) continue;
 
                     if (protocol::AoaProtocol::isAndroidDevice(desc.idVendor) &&
                         protocol::AoaProtocol::isAoaDevice(desc.idVendor, desc.idProduct)) {
-                        if (libusb_open(list[i], &handle) == 0) {
-                            isAoa = true;
-                            break;
+
+                        libusb_device_handle* candidate = nullptr;
+                        if (libusb_open(list2[i], &candidate) == 0) {
+                            if (isHandleAlive(candidate)) {
+                                handle = candidate;
+                                isAoa = true;
+                                LOG_INFO("[connectToDevice] Found alive AOA device on retry %d.", retry);
+                                break;
+                            } else {
+                                // [ADD] 열리긴 했지만 죽어있는(과도기) 핸들 → 버리고 다음 시도로
+                                LOG_WARN("[connectToDevice] Opened device is not alive yet (transient enumeration). Discarding and retrying...");
+                                libusb_close(candidate);
+                            }
                         }
                     }
                 }
-                libusb_free_device_list(list, 1);
+                libusb_free_device_list(list2, 1);
             }
-            
+
             if (handle) break;
             std::this_thread::sleep_for(250ms);
         }
@@ -123,10 +154,22 @@ bool UsbManager::connectToDevice() {
             return false;
         }
     } else {
+        // [ADD] 이미 AOA 모드로 열린 핸들도 동일하게 생존 검증 후 사용
+        if (!isHandleAlive(handle)) {
+            LOG_WARN("Device reports AOA mode but handle is not alive. Retrying open...");
+            libusb_close(handle);
+            handle = nullptr;
+            notifyError(-3, "AOA device handle invalid immediately after open.");
+            return false;
+        }
         LOG_INFO("Device is already in AOA mode.");
     }
 
-    // 3. AOA 엔드포인트 파싱
+    int cfgRc = libusb_set_configuration(handle, 1);
+    if (cfgRc != LIBUSB_SUCCESS && cfgRc != LIBUSB_ERROR_BUSY) {
+        LOG_WARN("libusb_set_configuration failed: %s (continuing anyway)", libusb_error_name(cfgRc));
+    }
+
     uint8_t intf = 0, epIn = 0, epOut = 0;
     if (!protocol::AoaProtocol::findAoaEndpoints(libusb_get_device(handle), intf, epIn, epOut)) {
         libusb_close(handle);
@@ -137,11 +180,12 @@ bool UsbManager::connectToDevice() {
     m_devHandle = handle;
     m_connected.store(true);
 
-    // 4. 통신 Transport 생성 및 오픈 (Read 루프 시작)
     m_transport = std::make_unique<transport::UsbTransport>(
         m_devHandle, intf, epIn, epOut,
-        [this](const std::vector<uint8_t>& data) { 
-            notifyMessageReceived(data); 
+        [this](const std::vector<uint8_t>& data) {
+            std::string receivedStr(data.begin(), data.end());
+            LOG_INFO("message from app: %s", receivedStr.c_str());
+            notifyMessageReceived(data);
         },
         [this](const std::string& err) {
             LOG_ERROR("Transport error: %s", err.c_str());
@@ -149,7 +193,7 @@ bool UsbManager::connectToDevice() {
             notifyDisconnected(err);
         }
     );
-    
+
     if (!m_transport->open()) {
         disconnect();
         notifyError(-5, "Failed to open UsbTransport interface.");
@@ -162,9 +206,9 @@ bool UsbManager::connectToDevice() {
 
 void UsbManager::disconnect() {
     std::lock_guard<std::mutex> lk(m_connectMutex);
-    
+
     if (m_transport) {
-        m_transport->close(); 
+        m_transport->close();
         m_transport.reset();
     }
 
@@ -172,7 +216,7 @@ void UsbManager::disconnect() {
         libusb_close(m_devHandle);
         m_devHandle = nullptr;
     }
-    
+
     m_connected.store(false);
 }
 
@@ -190,29 +234,26 @@ void UsbManager::scanDevices() {
     }
 
     LOG_INFO("==================================================");
-    LOG_INFO("             SCANNING FOR ANDROID DEVICES         ");
+    LOG_INFO("            SCANNING FOR ANDROID DEVICES          ");
     LOG_INFO("==================================================");
-    
+
     int androidDeviceCount = 0;
 
     for (ssize_t i = 0; i < cnt; ++i) {
         libusb_device_descriptor desc{};
         if (libusb_get_device_descriptor(list[i], &desc) != 0) continue;
 
-
-
-        // Check if the device is already in AOA (Accessory) mode
         bool isAndroid = protocol::AoaProtocol::isAndroidDevice(desc.idVendor);
-        
+
         if (isAndroid) {
-            LOG_INFO("[FOUND] Android Device -> VID: 0x%04X, PID: 0x%04X", 
+            LOG_INFO("[FOUND] Android Device -> VID: 0x%04X, PID: 0x%04X",
                      desc.idVendor, desc.idProduct);
             androidDeviceCount++;
         }
     }
 
     libusb_free_device_list(list, 1);
-    
+
     LOG_INFO("==================================================");
     LOG_INFO("Scan finished. Total Android devices found: %d", androidDeviceCount);
     LOG_INFO("==================================================");
@@ -228,7 +269,6 @@ bool UsbManager::sendData(const uint8_t* data, int length) {
     return m_transport->sendData(data, length);
 }
 
-// Observers
 void UsbManager::addConnectionObserver(IConnectionObserver* obs) {
     if (!obs) return;
     std::lock_guard<std::mutex> lock(m_observerMutex);

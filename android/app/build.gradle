@@ -1,0 +1,44 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.pkj.app.streamdeckcontroller'
+
+    // 추천 변경 1: 구글 최신 권장 사항에 맞춰 33 -> 34 (Android 14)로 상향
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.pkj.app.streamdeckcontroller"
+        minSdk 29 // 유지 (Android 10). AOA는 API 12부터 지원하므로 완벽히 호환됩니다.
+
+        // 추천 변경 1: compileSdk와 동일하게 34로 상향
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // 추천 변경 2: 최신 Android Studio 및 라이브러리 호환성을 위해 Java 11 이상 권장
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+    // AOA 통신은 기본 내장 API이므로 아래 기본 UI/Test 라이브러리만으로도 충분합니다.
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+}

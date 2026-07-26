@@ -41,7 +41,7 @@ private:
     std::thread       m_readThread;
     std::mutex        m_writeMutex;
 
-    static constexpr int IO_ERROR_LIMIT = 5;
+    static constexpr int IO_ERROR_LIMIT = 25;
 };
 
 } // namespace transport

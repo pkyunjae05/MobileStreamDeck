@@ -107,16 +107,22 @@ bool AoaProtocol::findAoaEndpoints(libusb_device* dev, uint8_t& outInterface, ui
             if (idesc->bInterfaceClass == 255 &&
                 idesc->bInterfaceSubClass == 255 &&
                 idesc->bInterfaceProtocol == 0) {
-                
-                outInterface = j;
+
+                // [FIX] 배열 인덱스(j)가 아니라 실제 bInterfaceNumber를 사용해야 함.
+                //       claim_interface / release_interface는 인터페이스 번호 기준으로 동작하므로
+                //       기기가 복합 장치(AOA+ADB 등)일 때 인덱스와 번호가 어긋나면
+                //       엉뚱한 인터페이스를 claim하게 되어 bulk 전송이 조용히 실패할 수 있음.
+                outInterface = idesc->bInterfaceNumber;
                 found = true;
 
                 for (int l = 0; l < idesc->bNumEndpoints; ++l) {
                     const libusb_endpoint_descriptor* edesc = &idesc->endpoint[l];
                     if ((edesc->bEndpointAddress & LIBUSB_ENDPOINT_DIR_MASK) == LIBUSB_ENDPOINT_IN) {
                         outReadEp = edesc->bEndpointAddress;
+                        LOG_INFO("Found IN Endpoint (App -> PC): 0x%02X", outReadEp);
                     } else {
                         outWriteEp = edesc->bEndpointAddress;
+                        LOG_INFO("Found OUT Endpoint (PC -> App): 0x%02X", outWriteEp);
                     }
                 }
             }

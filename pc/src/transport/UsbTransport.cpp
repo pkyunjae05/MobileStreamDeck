@@ -2,6 +2,7 @@
 #include "../protocol/AoaConstants.h"
 #include "../utils/Logger.h"
 #include <chrono>
+#include <thread>
 
 using namespace std::chrono_literals;
 
@@ -20,7 +21,6 @@ UsbTransport::~UsbTransport() {
 bool UsbTransport::open() {
     if (!m_handle) return false;
 
-    // Bypass kernel driver detach on Windows
 #ifndef _WIN32
     if (libusb_kernel_driver_active(m_handle, m_interfaceNum) == 1) {
         libusb_detach_kernel_driver(m_handle, m_interfaceNum);
@@ -33,6 +33,16 @@ bool UsbTransport::open() {
         return false;
     }
 
+    // [ADD] claim 직후, 재열거~claim 사이 대기 시간 동안 남아있을 수 있는
+    //       엔드포인트의 정체(halt) 상태를 read loop 시작 "전"에 선제적으로 해제.
+    //       (기존에는 readLoop 안에서 에러가 나야만 반응형으로 clear_halt를 호출했음)
+    int rIn  = libusb_clear_halt(m_handle, m_epIn);
+    int rOut = libusb_clear_halt(m_handle, m_epOut);
+    if (rIn != LIBUSB_SUCCESS)
+        LOG_WARN("Pre-emptive clear_halt(IN 0x%02X) rc=%d (%s)", m_epIn, rIn, libusb_error_name(rIn));
+    if (rOut != LIBUSB_SUCCESS)
+        LOG_WARN("Pre-emptive clear_halt(OUT 0x%02X) rc=%d (%s)", m_epOut, rOut, libusb_error_name(rOut));
+
     if (!m_running.exchange(true)) {
         m_readThread = std::thread(&UsbTransport::readLoop, this);
         LOG_INFO("UsbTransport I/O loop started on interface [%d].", m_interfaceNum);
@@ -43,26 +53,41 @@ bool UsbTransport::open() {
 void UsbTransport::close() {
     if (m_running.exchange(false)) {
         if (m_readThread.joinable()) {
-            m_readThread.join();
+            if (std::this_thread::get_id() == m_readThread.get_id()) {
+                m_readThread.detach();
+            } else {
+                m_readThread.join();
+            }
         }
     }
+    
     if (m_handle) {
         libusb_release_interface(m_handle, m_interfaceNum);
         LOG_INFO("UsbTransport I/O loop stopped and interface released.");
+        m_handle = nullptr;
     }
 }
 
 bool UsbTransport::sendData(const uint8_t* data, int length) {
-    if (!m_running.load() || !m_handle || !data || length <= 0) return false;
+    if (!m_running.load() || !m_handle || !data || length <= 0) {
+        LOG_ERROR("sendData aborted: running=%d, handle=%p, data=%p, length=%d", 
+                  m_running.load(), (void*)m_handle, (void*)data, length);
+        return false;
+    }
 
     std::lock_guard<std::mutex> lock(m_writeMutex);
 
     int transferred = 0;
+    LOG_INFO("Attempting bulk OUT transfer: ep=0x%02X, length=%d, timeout=%d", m_epOut, length, aoa::BULK_TIMEOUT_MS);
+    
     int rc = libusb_bulk_transfer(m_handle, m_epOut, (unsigned char*)data, length, &transferred, aoa::BULK_TIMEOUT_MS);
 
-    if (rc == LIBUSB_SUCCESS) return true;
+    if (rc == LIBUSB_SUCCESS) {
+        LOG_INFO("bulk OUT success: transferred=%d bytes", transferred);
+        return true;
+    }
 
-    LOG_ERROR("bulk OUT failed: %s", libusb_strerror((libusb_error)rc));
+    LOG_ERROR("bulk OUT failed: rc=%d, error=%s (ep=0x%02X)", rc, libusb_strerror((libusb_error)rc), m_epOut);
     return false;
 }
 
@@ -91,6 +116,9 @@ void UsbTransport::readLoop() {
         if (rc == LIBUSB_ERROR_IO || rc == LIBUSB_ERROR_PIPE) {
             ioErrorStreak++;
             LOG_WARN("bulk IN transient error %d/%d: %s", ioErrorStreak, IO_ERROR_LIMIT, libusb_strerror((libusb_error)rc));
+
+            libusb_clear_halt(m_handle, m_epIn);
+
             if (ioErrorStreak < IO_ERROR_LIMIT) {
                 std::this_thread::sleep_for(200ms);
                 continue;
@@ -105,4 +133,5 @@ void UsbTransport::readLoop() {
         break;
     }
 }
+
 } // namespace transport

@@ -379,4 +379,7 @@ CMakeFiles/MobileStreamDeck.dir/src/service/StreamDeckService.cpp.obj: \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/pstl/execution_defs.h \
  P:/Project/MobileStreamDeck/pc/src/utils/Logger.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/cstdarg \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/chrono
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/chrono \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/thread \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/std_thread.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/this_thread_sleep.h

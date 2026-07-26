@@ -1,6 +1,7 @@
 #include "StreamDeckService.h"
 #include "../manager/UsbManager.h"
 #include "../utils/Logger.h"
+#include <thread>
 
 StreamDeckService::StreamDeckService() = default;
 
@@ -71,6 +72,21 @@ bool StreamDeckService::sendMessage(const std::string& text) {
 
 void StreamDeckService::onConnected(const std::string& deviceInfo) {
     LOG_INFO("SERVICE CONNECTED: %s", deviceInfo.c_str());
+    LOG_INFO("Waiting for handshake signal from Android app...");
+    // PC는 여기서 무리하게 sendMessage를 하지 않고 안드로이드의 신호를 기다립니다.
+}
+
+void StreamDeckService::onMessageReceived(const std::vector<uint8_t>& data) {
+    std::string text(data.begin(), data.end());
+    LOG_INFO("SERVICE RECV bytes=%zu text=%s", data.size(), text.c_str());
+
+    // 안드로이드가 보낸 초기 신호를 감지한 경우
+    if (text.find("HELLO_ANDROID") != std::string::npos) {
+        LOG_INFO("Handshake signal received from Android! Sending PC response...");
+        
+        // 즉시 응답 전송
+        sendMessage("HELLO_PC_FROM_APP");
+    }
 }
 
 void StreamDeckService::onDisconnected(const std::string& reason) {
@@ -79,9 +95,4 @@ void StreamDeckService::onDisconnected(const std::string& reason) {
 
 void StreamDeckService::onError(int errorCode, const std::string& message) {
     LOG_ERROR("SERVICE ERROR(%d): %s", errorCode, message.c_str());
-}
-
-void StreamDeckService::onMessageReceived(const std::vector<uint8_t>& data) {
-    std::string text(data.begin(), data.end());
-    LOG_INFO("SERVICE RECV bytes=%zu text=%s", data.size(), text.c_str());
 }

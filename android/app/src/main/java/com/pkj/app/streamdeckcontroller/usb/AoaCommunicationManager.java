@@ -172,4 +172,8 @@ public class AoaCommunicationManager {
             Log.e(TAG, "Error closing connection", e);
         }
     }
+
+    public boolean isConnected() {
+        return isConnected;
+    }
 }

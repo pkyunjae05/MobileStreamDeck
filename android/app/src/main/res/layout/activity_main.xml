@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    [설계 의도]
+    - GridLayout으로 구성해 향후 버튼이 늘어나도 rowCount/columnCount만 조정하면 됨
+    - 각 버튼(ImageButton)의 android:tag 에 "PC로 전송할 명령 문자열"을 그대로 넣음
+      -> MainActivity의 공용 클릭 리스너가 이 tag 값을 읽어 그대로 전송
+      -> 버튼이 추가될 때 Java 코드 수정 없이 XML만 추가하면 되는 구조
+-->
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121212"
+    android:columnCount="3"
+    android:rowCount="4"
+    android:padding="16dp"
+    android:alignmentMode="alignBounds"
+    android:useDefaultMargins="true">
+
+    <ImageButton
+        android:id="@+id/btn_action_youtube"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:src="@drawable/ic_action_play"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:contentDescription="@string/action_label_youtube"
+        android:tag="@string/action_command_youtube" />
+
+    <!--
+        [향후 확장 예시]
+        추가 버튼은 아래처럼 tag만 다르게 넣어 계속 붙이면 됨.
+        MainActivity.java 쪽 코드는 수정할 필요 없음.
+
+        <ImageButton
+            android:id="@+id/btn_action_spotify"
+            ...
+            android:tag="Spotify" />
+    -->
+
+</GridLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- [FIX] xmlns:android 값이 SVG 네임스페이스로 잘못 지정되어 있어
+     android:width/height/viewportWidth 등 모든 속성이 무시되고 있었음.
+     -> 안드로이드 표준 리소스 네임스페이스로 수정 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- 배경: 둥근 사각형 -->
+    <path
+        android:fillColor="#FF0000"
+        android:pathData="M2,6 C2,3.8 3.8,2 6,2 H18 C20.2,2 22,3.8 22,6 V18 C22,20.2 20.2,22 18,22 H6 C3.8,22 2,20.2 2,18 Z" />
+    <!-- 재생 삼각형 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M9.5,7.5 L17,12 L9.5,16.5 Z" />
+</vector>

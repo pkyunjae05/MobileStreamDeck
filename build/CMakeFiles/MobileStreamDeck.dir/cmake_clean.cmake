@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/MobileStreamDeck.dir/src/main.cpp.obj"
   "CMakeFiles/MobileStreamDeck.dir/src/main.cpp.obj.d"
+  "CMakeFiles/MobileStreamDeck.dir/src/manager/CommandManager.cpp.obj"
+  "CMakeFiles/MobileStreamDeck.dir/src/manager/CommandManager.cpp.obj.d"
   "CMakeFiles/MobileStreamDeck.dir/src/manager/UsbManager.cpp.obj"
   "CMakeFiles/MobileStreamDeck.dir/src/manager/UsbManager.cpp.obj.d"
   "CMakeFiles/MobileStreamDeck.dir/src/protocol/AoaProtocol.cpp.obj"
@@ -9,6 +11,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/MobileStreamDeck.dir/src/service/StreamDeckService.cpp.obj.d"
   "CMakeFiles/MobileStreamDeck.dir/src/transport/UsbTransport.cpp.obj"
   "CMakeFiles/MobileStreamDeck.dir/src/transport/UsbTransport.cpp.obj.d"
+  "CMakeFiles/MobileStreamDeck.dir/src/utils/PlatformLauncher.cpp.obj"
+  "CMakeFiles/MobileStreamDeck.dir/src/utils/PlatformLauncher.cpp.obj.d"
   "MobileStreamDeck.exe"
   "MobileStreamDeck.exe.manifest"
   "MobileStreamDeck.pdb"

@@ -1,7 +1,7 @@
 #include "StreamDeckService.h"
 #include "../manager/UsbManager.h"
+#include "../manager/CommandManager.h"
 #include "../utils/Logger.h"
-#include <thread>
 
 StreamDeckService::StreamDeckService() = default;
 
@@ -19,6 +19,8 @@ bool StreamDeckService::initialize() {
         LOG_ERROR("UsbManager init failed");
         return false;
     }
+
+    CommandManager::getInstance().initialize();
     
     return true;
 }
@@ -86,6 +88,10 @@ void StreamDeckService::onMessageReceived(const std::vector<uint8_t>& data) {
         
         // 즉시 응답 전송
         sendMessage("HELLO_PC_FROM_APP");
+    }
+
+    if (!CommandManager::getInstance().dispatch(text)) {
+        LOG_WARN("Unknown command received: %s", text.c_str());
     }
 }
 

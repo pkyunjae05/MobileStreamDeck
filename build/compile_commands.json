@@ -13,6 +13,12 @@
 },
 {
   "directory": "P:/Project/MobileStreamDeck/build",
+  "command": "C:\\mingw64\\bin\\g++.exe -DNOMINMAX -DWIN32_LEAN_AND_MEAN -D_CRT_SECURE_NO_WARNINGS @CMakeFiles/MobileStreamDeck.dir/includes_CXX.rsp -g -std=c++17 -Wall -Wextra -o CMakeFiles\\MobileStreamDeck.dir\\src\\manager\\CommandManager.cpp.obj -c P:\\Project\\MobileStreamDeck\\pc\\src\\manager\\CommandManager.cpp",
+  "file": "P:/Project/MobileStreamDeck/pc/src/manager/CommandManager.cpp",
+  "output": "CMakeFiles/MobileStreamDeck.dir/src/manager/CommandManager.cpp.obj"
+},
+{
+  "directory": "P:/Project/MobileStreamDeck/build",
   "command": "C:\\mingw64\\bin\\g++.exe -DNOMINMAX -DWIN32_LEAN_AND_MEAN -D_CRT_SECURE_NO_WARNINGS @CMakeFiles/MobileStreamDeck.dir/includes_CXX.rsp -g -std=c++17 -Wall -Wextra -o CMakeFiles\\MobileStreamDeck.dir\\src\\protocol\\AoaProtocol.cpp.obj -c P:\\Project\\MobileStreamDeck\\pc\\src\\protocol\\AoaProtocol.cpp",
   "file": "P:/Project/MobileStreamDeck/pc/src/protocol/AoaProtocol.cpp",
   "output": "CMakeFiles/MobileStreamDeck.dir/src/protocol/AoaProtocol.cpp.obj"
@@ -28,5 +34,11 @@
   "command": "C:\\mingw64\\bin\\g++.exe -DNOMINMAX -DWIN32_LEAN_AND_MEAN -D_CRT_SECURE_NO_WARNINGS @CMakeFiles/MobileStreamDeck.dir/includes_CXX.rsp -g -std=c++17 -Wall -Wextra -o CMakeFiles\\MobileStreamDeck.dir\\src\\transport\\UsbTransport.cpp.obj -c P:\\Project\\MobileStreamDeck\\pc\\src\\transport\\UsbTransport.cpp",
   "file": "P:/Project/MobileStreamDeck/pc/src/transport/UsbTransport.cpp",
   "output": "CMakeFiles/MobileStreamDeck.dir/src/transport/UsbTransport.cpp.obj"
+},
+{
+  "directory": "P:/Project/MobileStreamDeck/build",
+  "command": "C:\\mingw64\\bin\\g++.exe -DNOMINMAX -DWIN32_LEAN_AND_MEAN -D_CRT_SECURE_NO_WARNINGS @CMakeFiles/MobileStreamDeck.dir/includes_CXX.rsp -g -std=c++17 -Wall -Wextra -o CMakeFiles\\MobileStreamDeck.dir\\src\\utils\\PlatformLauncher.cpp.obj -c P:\\Project\\MobileStreamDeck\\pc\\src\\utils\\PlatformLauncher.cpp",
+  "file": "P:/Project/MobileStreamDeck/pc/src/utils/PlatformLauncher.cpp",
+  "output": "CMakeFiles/MobileStreamDeck.dir/src/utils/PlatformLauncher.cpp.obj"
 }
 ]

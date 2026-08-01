@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <cstdint>
+#include <thread>
 
 class StreamDeckService : public IConnectionObserver, public IMessageObserver {
 public:

@@ -101,11 +101,26 @@ CMakeFiles/MobileStreamDeck.dir/src/manager/UsbManager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MobileStreamDeck.dir/src/manager/UsbManager.cpp.s"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S P:\Project\MobileStreamDeck\pc\src\manager\UsbManager.cpp -o CMakeFiles\MobileStreamDeck.dir\src\manager\UsbManager.cpp.s
 
+CMakeFiles/MobileStreamDeck.dir/src/manager/CommandManager.cpp.obj: CMakeFiles/MobileStreamDeck.dir/flags.make
+CMakeFiles/MobileStreamDeck.dir/src/manager/CommandManager.cpp.obj: CMakeFiles/MobileStreamDeck.dir/includes_CXX.rsp
+CMakeFiles/MobileStreamDeck.dir/src/manager/CommandManager.cpp.obj: P:/Project/MobileStreamDeck/pc/src/manager/CommandManager.cpp
+CMakeFiles/MobileStreamDeck.dir/src/manager/CommandManager.cpp.obj: CMakeFiles/MobileStreamDeck.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=P:\Project\MobileStreamDeck\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/MobileStreamDeck.dir/src/manager/CommandManager.cpp.obj"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MobileStreamDeck.dir/src/manager/CommandManager.cpp.obj -MF CMakeFiles\MobileStreamDeck.dir\src\manager\CommandManager.cpp.obj.d -o CMakeFiles\MobileStreamDeck.dir\src\manager\CommandManager.cpp.obj -c P:\Project\MobileStreamDeck\pc\src\manager\CommandManager.cpp
+
+CMakeFiles/MobileStreamDeck.dir/src/manager/CommandManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/MobileStreamDeck.dir/src/manager/CommandManager.cpp.i"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E P:\Project\MobileStreamDeck\pc\src\manager\CommandManager.cpp > CMakeFiles\MobileStreamDeck.dir\src\manager\CommandManager.cpp.i
+
+CMakeFiles/MobileStreamDeck.dir/src/manager/CommandManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MobileStreamDeck.dir/src/manager/CommandManager.cpp.s"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S P:\Project\MobileStreamDeck\pc\src\manager\CommandManager.cpp -o CMakeFiles\MobileStreamDeck.dir\src\manager\CommandManager.cpp.s
+
 CMakeFiles/MobileStreamDeck.dir/src/protocol/AoaProtocol.cpp.obj: CMakeFiles/MobileStreamDeck.dir/flags.make
 CMakeFiles/MobileStreamDeck.dir/src/protocol/AoaProtocol.cpp.obj: CMakeFiles/MobileStreamDeck.dir/includes_CXX.rsp
 CMakeFiles/MobileStreamDeck.dir/src/protocol/AoaProtocol.cpp.obj: P:/Project/MobileStreamDeck/pc/src/protocol/AoaProtocol.cpp
 CMakeFiles/MobileStreamDeck.dir/src/protocol/AoaProtocol.cpp.obj: CMakeFiles/MobileStreamDeck.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=P:\Project\MobileStreamDeck\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/MobileStreamDeck.dir/src/protocol/AoaProtocol.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=P:\Project\MobileStreamDeck\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/MobileStreamDeck.dir/src/protocol/AoaProtocol.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MobileStreamDeck.dir/src/protocol/AoaProtocol.cpp.obj -MF CMakeFiles\MobileStreamDeck.dir\src\protocol\AoaProtocol.cpp.obj.d -o CMakeFiles\MobileStreamDeck.dir\src\protocol\AoaProtocol.cpp.obj -c P:\Project\MobileStreamDeck\pc\src\protocol\AoaProtocol.cpp
 
 CMakeFiles/MobileStreamDeck.dir/src/protocol/AoaProtocol.cpp.i: cmake_force
@@ -120,7 +135,7 @@ CMakeFiles/MobileStreamDeck.dir/src/service/StreamDeckService.cpp.obj: CMakeFile
 CMakeFiles/MobileStreamDeck.dir/src/service/StreamDeckService.cpp.obj: CMakeFiles/MobileStreamDeck.dir/includes_CXX.rsp
 CMakeFiles/MobileStreamDeck.dir/src/service/StreamDeckService.cpp.obj: P:/Project/MobileStreamDeck/pc/src/service/StreamDeckService.cpp
 CMakeFiles/MobileStreamDeck.dir/src/service/StreamDeckService.cpp.obj: CMakeFiles/MobileStreamDeck.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=P:\Project\MobileStreamDeck\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/MobileStreamDeck.dir/src/service/StreamDeckService.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=P:\Project\MobileStreamDeck\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/MobileStreamDeck.dir/src/service/StreamDeckService.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MobileStreamDeck.dir/src/service/StreamDeckService.cpp.obj -MF CMakeFiles\MobileStreamDeck.dir\src\service\StreamDeckService.cpp.obj.d -o CMakeFiles\MobileStreamDeck.dir\src\service\StreamDeckService.cpp.obj -c P:\Project\MobileStreamDeck\pc\src\service\StreamDeckService.cpp
 
 CMakeFiles/MobileStreamDeck.dir/src/service/StreamDeckService.cpp.i: cmake_force
@@ -135,7 +150,7 @@ CMakeFiles/MobileStreamDeck.dir/src/transport/UsbTransport.cpp.obj: CMakeFiles/M
 CMakeFiles/MobileStreamDeck.dir/src/transport/UsbTransport.cpp.obj: CMakeFiles/MobileStreamDeck.dir/includes_CXX.rsp
 CMakeFiles/MobileStreamDeck.dir/src/transport/UsbTransport.cpp.obj: P:/Project/MobileStreamDeck/pc/src/transport/UsbTransport.cpp
 CMakeFiles/MobileStreamDeck.dir/src/transport/UsbTransport.cpp.obj: CMakeFiles/MobileStreamDeck.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=P:\Project\MobileStreamDeck\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/MobileStreamDeck.dir/src/transport/UsbTransport.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=P:\Project\MobileStreamDeck\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/MobileStreamDeck.dir/src/transport/UsbTransport.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MobileStreamDeck.dir/src/transport/UsbTransport.cpp.obj -MF CMakeFiles\MobileStreamDeck.dir\src\transport\UsbTransport.cpp.obj.d -o CMakeFiles\MobileStreamDeck.dir\src\transport\UsbTransport.cpp.obj -c P:\Project\MobileStreamDeck\pc\src\transport\UsbTransport.cpp
 
 CMakeFiles/MobileStreamDeck.dir/src/transport/UsbTransport.cpp.i: cmake_force
@@ -146,28 +161,47 @@ CMakeFiles/MobileStreamDeck.dir/src/transport/UsbTransport.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MobileStreamDeck.dir/src/transport/UsbTransport.cpp.s"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S P:\Project\MobileStreamDeck\pc\src\transport\UsbTransport.cpp -o CMakeFiles\MobileStreamDeck.dir\src\transport\UsbTransport.cpp.s
 
+CMakeFiles/MobileStreamDeck.dir/src/utils/PlatformLauncher.cpp.obj: CMakeFiles/MobileStreamDeck.dir/flags.make
+CMakeFiles/MobileStreamDeck.dir/src/utils/PlatformLauncher.cpp.obj: CMakeFiles/MobileStreamDeck.dir/includes_CXX.rsp
+CMakeFiles/MobileStreamDeck.dir/src/utils/PlatformLauncher.cpp.obj: P:/Project/MobileStreamDeck/pc/src/utils/PlatformLauncher.cpp
+CMakeFiles/MobileStreamDeck.dir/src/utils/PlatformLauncher.cpp.obj: CMakeFiles/MobileStreamDeck.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=P:\Project\MobileStreamDeck\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/MobileStreamDeck.dir/src/utils/PlatformLauncher.cpp.obj"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MobileStreamDeck.dir/src/utils/PlatformLauncher.cpp.obj -MF CMakeFiles\MobileStreamDeck.dir\src\utils\PlatformLauncher.cpp.obj.d -o CMakeFiles\MobileStreamDeck.dir\src\utils\PlatformLauncher.cpp.obj -c P:\Project\MobileStreamDeck\pc\src\utils\PlatformLauncher.cpp
+
+CMakeFiles/MobileStreamDeck.dir/src/utils/PlatformLauncher.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/MobileStreamDeck.dir/src/utils/PlatformLauncher.cpp.i"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E P:\Project\MobileStreamDeck\pc\src\utils\PlatformLauncher.cpp > CMakeFiles\MobileStreamDeck.dir\src\utils\PlatformLauncher.cpp.i
+
+CMakeFiles/MobileStreamDeck.dir/src/utils/PlatformLauncher.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MobileStreamDeck.dir/src/utils/PlatformLauncher.cpp.s"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S P:\Project\MobileStreamDeck\pc\src\utils\PlatformLauncher.cpp -o CMakeFiles\MobileStreamDeck.dir\src\utils\PlatformLauncher.cpp.s
+
 # Object files for target MobileStreamDeck
 MobileStreamDeck_OBJECTS = \
 "CMakeFiles/MobileStreamDeck.dir/src/main.cpp.obj" \
 "CMakeFiles/MobileStreamDeck.dir/src/manager/UsbManager.cpp.obj" \
+"CMakeFiles/MobileStreamDeck.dir/src/manager/CommandManager.cpp.obj" \
 "CMakeFiles/MobileStreamDeck.dir/src/protocol/AoaProtocol.cpp.obj" \
 "CMakeFiles/MobileStreamDeck.dir/src/service/StreamDeckService.cpp.obj" \
-"CMakeFiles/MobileStreamDeck.dir/src/transport/UsbTransport.cpp.obj"
+"CMakeFiles/MobileStreamDeck.dir/src/transport/UsbTransport.cpp.obj" \
+"CMakeFiles/MobileStreamDeck.dir/src/utils/PlatformLauncher.cpp.obj"
 
 # External object files for target MobileStreamDeck
 MobileStreamDeck_EXTERNAL_OBJECTS =
 
 MobileStreamDeck.exe: CMakeFiles/MobileStreamDeck.dir/src/main.cpp.obj
 MobileStreamDeck.exe: CMakeFiles/MobileStreamDeck.dir/src/manager/UsbManager.cpp.obj
+MobileStreamDeck.exe: CMakeFiles/MobileStreamDeck.dir/src/manager/CommandManager.cpp.obj
 MobileStreamDeck.exe: CMakeFiles/MobileStreamDeck.dir/src/protocol/AoaProtocol.cpp.obj
 MobileStreamDeck.exe: CMakeFiles/MobileStreamDeck.dir/src/service/StreamDeckService.cpp.obj
 MobileStreamDeck.exe: CMakeFiles/MobileStreamDeck.dir/src/transport/UsbTransport.cpp.obj
+MobileStreamDeck.exe: CMakeFiles/MobileStreamDeck.dir/src/utils/PlatformLauncher.cpp.obj
 MobileStreamDeck.exe: CMakeFiles/MobileStreamDeck.dir/build.make
 MobileStreamDeck.exe: P:/Project/MobileStreamDeck/pc/lib/libusb-1.0.29/MinGW64/static/libusb-1.0.a
 MobileStreamDeck.exe: CMakeFiles/MobileStreamDeck.dir/linkLibs.rsp
 MobileStreamDeck.exe: CMakeFiles/MobileStreamDeck.dir/objects1.rsp
 MobileStreamDeck.exe: CMakeFiles/MobileStreamDeck.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=P:\Project\MobileStreamDeck\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable MobileStreamDeck.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=P:\Project\MobileStreamDeck\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable MobileStreamDeck.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\MobileStreamDeck.dir\link.txt --verbose=$(VERBOSE)
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold "Copying libusb-1.0.dll to output directory"
 	"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different P:/Project/MobileStreamDeck/pc/lib/libusb-1.0.29/MinGW64/dll/libusb-1.0.dll P:/Project/MobileStreamDeck/build

@@ -152,6 +152,30 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\MobileStreamDeck.dir\build.make CMakeFiles/MobileStreamDeck.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/manager/CommandManager.obj: src/manager/CommandManager.cpp.obj
+.PHONY : src/manager/CommandManager.obj
+
+# target to build an object file
+src/manager/CommandManager.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\MobileStreamDeck.dir\build.make CMakeFiles/MobileStreamDeck.dir/src/manager/CommandManager.cpp.obj
+.PHONY : src/manager/CommandManager.cpp.obj
+
+src/manager/CommandManager.i: src/manager/CommandManager.cpp.i
+.PHONY : src/manager/CommandManager.i
+
+# target to preprocess a source file
+src/manager/CommandManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\MobileStreamDeck.dir\build.make CMakeFiles/MobileStreamDeck.dir/src/manager/CommandManager.cpp.i
+.PHONY : src/manager/CommandManager.cpp.i
+
+src/manager/CommandManager.s: src/manager/CommandManager.cpp.s
+.PHONY : src/manager/CommandManager.s
+
+# target to generate assembly for a file
+src/manager/CommandManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\MobileStreamDeck.dir\build.make CMakeFiles/MobileStreamDeck.dir/src/manager/CommandManager.cpp.s
+.PHONY : src/manager/CommandManager.cpp.s
+
 src/manager/UsbManager.obj: src/manager/UsbManager.cpp.obj
 .PHONY : src/manager/UsbManager.obj
 
@@ -248,6 +272,30 @@ src/transport/UsbTransport.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\MobileStreamDeck.dir\build.make CMakeFiles/MobileStreamDeck.dir/src/transport/UsbTransport.cpp.s
 .PHONY : src/transport/UsbTransport.cpp.s
 
+src/utils/PlatformLauncher.obj: src/utils/PlatformLauncher.cpp.obj
+.PHONY : src/utils/PlatformLauncher.obj
+
+# target to build an object file
+src/utils/PlatformLauncher.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\MobileStreamDeck.dir\build.make CMakeFiles/MobileStreamDeck.dir/src/utils/PlatformLauncher.cpp.obj
+.PHONY : src/utils/PlatformLauncher.cpp.obj
+
+src/utils/PlatformLauncher.i: src/utils/PlatformLauncher.cpp.i
+.PHONY : src/utils/PlatformLauncher.i
+
+# target to preprocess a source file
+src/utils/PlatformLauncher.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\MobileStreamDeck.dir\build.make CMakeFiles/MobileStreamDeck.dir/src/utils/PlatformLauncher.cpp.i
+.PHONY : src/utils/PlatformLauncher.cpp.i
+
+src/utils/PlatformLauncher.s: src/utils/PlatformLauncher.cpp.s
+.PHONY : src/utils/PlatformLauncher.s
+
+# target to generate assembly for a file
+src/utils/PlatformLauncher.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\MobileStreamDeck.dir\build.make CMakeFiles/MobileStreamDeck.dir/src/utils/PlatformLauncher.cpp.s
+.PHONY : src/utils/PlatformLauncher.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -260,6 +308,9 @@ help:
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s
+	@echo ... src/manager/CommandManager.obj
+	@echo ... src/manager/CommandManager.i
+	@echo ... src/manager/CommandManager.s
 	@echo ... src/manager/UsbManager.obj
 	@echo ... src/manager/UsbManager.i
 	@echo ... src/manager/UsbManager.s
@@ -272,6 +323,9 @@ help:
 	@echo ... src/transport/UsbTransport.obj
 	@echo ... src/transport/UsbTransport.i
 	@echo ... src/transport/UsbTransport.s
+	@echo ... src/utils/PlatformLauncher.obj
+	@echo ... src/utils/PlatformLauncher.i
+	@echo ... src/utils/PlatformLauncher.s
 .PHONY : help
 
 

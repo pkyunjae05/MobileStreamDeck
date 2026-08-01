@@ -9,10 +9,12 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "P:/Project/MobileStreamDeck/pc/src/main.cpp" "CMakeFiles/MobileStreamDeck.dir/src/main.cpp.obj" "gcc" "CMakeFiles/MobileStreamDeck.dir/src/main.cpp.obj.d"
+  "P:/Project/MobileStreamDeck/pc/src/manager/CommandManager.cpp" "CMakeFiles/MobileStreamDeck.dir/src/manager/CommandManager.cpp.obj" "gcc" "CMakeFiles/MobileStreamDeck.dir/src/manager/CommandManager.cpp.obj.d"
   "P:/Project/MobileStreamDeck/pc/src/manager/UsbManager.cpp" "CMakeFiles/MobileStreamDeck.dir/src/manager/UsbManager.cpp.obj" "gcc" "CMakeFiles/MobileStreamDeck.dir/src/manager/UsbManager.cpp.obj.d"
   "P:/Project/MobileStreamDeck/pc/src/protocol/AoaProtocol.cpp" "CMakeFiles/MobileStreamDeck.dir/src/protocol/AoaProtocol.cpp.obj" "gcc" "CMakeFiles/MobileStreamDeck.dir/src/protocol/AoaProtocol.cpp.obj.d"
   "P:/Project/MobileStreamDeck/pc/src/service/StreamDeckService.cpp" "CMakeFiles/MobileStreamDeck.dir/src/service/StreamDeckService.cpp.obj" "gcc" "CMakeFiles/MobileStreamDeck.dir/src/service/StreamDeckService.cpp.obj.d"
   "P:/Project/MobileStreamDeck/pc/src/transport/UsbTransport.cpp" "CMakeFiles/MobileStreamDeck.dir/src/transport/UsbTransport.cpp.obj" "gcc" "CMakeFiles/MobileStreamDeck.dir/src/transport/UsbTransport.cpp.obj.d"
+  "P:/Project/MobileStreamDeck/pc/src/utils/PlatformLauncher.cpp" "CMakeFiles/MobileStreamDeck.dir/src/utils/PlatformLauncher.cpp.obj" "gcc" "CMakeFiles/MobileStreamDeck.dir/src/utils/PlatformLauncher.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

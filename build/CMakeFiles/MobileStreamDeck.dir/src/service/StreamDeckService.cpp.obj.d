@@ -111,16 +111,34 @@ CMakeFiles/MobileStreamDeck.dir/src/service/StreamDeckService.cpp.obj: \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/cstdint \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdint.h \
  C:/mingw64/x86_64-w64-mingw32/include/stdint.h \
- P:/Project/MobileStreamDeck/pc/src/manager/UsbManager.h \
- P:/Project/MobileStreamDeck/pc/lib/libusb-1.0.29/include/libusb.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/thread \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/std_thread.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/unique_ptr.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/x86_64-w64-mingw32/bits/gthr.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/x86_64-w64-mingw32/bits/gthr-default.h \
+ C:/mingw64/x86_64-w64-mingw32/include/pthread.h \
  C:/mingw64/x86_64-w64-mingw32/include/sys/types.h \
- C:/mingw64/x86_64-w64-mingw32/include/sys/time.h \
+ C:/mingw64/x86_64-w64-mingw32/include/process.h \
+ C:/mingw64/x86_64-w64-mingw32/include/corecrt_startup.h \
+ C:/mingw64/x86_64-w64-mingw32/include/signal.h \
+ C:/mingw64/x86_64-w64-mingw32/include/pthread_signal.h \
  C:/mingw64/x86_64-w64-mingw32/include/time.h \
  C:/mingw64/x86_64-w64-mingw32/include/sys/timeb.h \
  C:/mingw64/x86_64-w64-mingw32/include/sec_api/sys/timeb_s.h \
  C:/mingw64/x86_64-w64-mingw32/include/_timeval.h \
  C:/mingw64/x86_64-w64-mingw32/include/pthread_time.h \
  C:/mingw64/x86_64-w64-mingw32/include/pthread_compat.h \
+ C:/mingw64/x86_64-w64-mingw32/include/sched.h \
+ C:/mingw64/x86_64-w64-mingw32/include/pthread_unistd.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/this_thread_sleep.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/chrono.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/ratio \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/limits \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/ctime \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/parse_numbers.h \
+ P:/Project/MobileStreamDeck/pc/src/manager/UsbManager.h \
+ P:/Project/MobileStreamDeck/pc/lib/libusb-1.0.29/include/libusb.h \
+ C:/mingw64/x86_64-w64-mingw32/include/sys/time.h \
  C:/mingw64/x86_64-w64-mingw32/include/windows.h \
  C:/mingw64/x86_64-w64-mingw32/include/sdkddkver.h \
  C:/mingw64/x86_64-w64-mingw32/include/excpt.h \
@@ -339,21 +357,7 @@ CMakeFiles/MobileStreamDeck.dir/src/service/StreamDeckService.cpp.obj: \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/atomic_base.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/atomic_lockfree_defines.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/mutex \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/chrono.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/ratio \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/limits \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/ctime \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/parse_numbers.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/std_mutex.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/x86_64-w64-mingw32/bits/gthr.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/x86_64-w64-mingw32/bits/gthr-default.h \
- C:/mingw64/x86_64-w64-mingw32/include/pthread.h \
- C:/mingw64/x86_64-w64-mingw32/include/process.h \
- C:/mingw64/x86_64-w64-mingw32/include/corecrt_startup.h \
- C:/mingw64/x86_64-w64-mingw32/include/signal.h \
- C:/mingw64/x86_64-w64-mingw32/include/pthread_signal.h \
- C:/mingw64/x86_64-w64-mingw32/include/sched.h \
- C:/mingw64/x86_64-w64-mingw32/include/pthread_unistd.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/unique_lock.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/x86_64-w64-mingw32/bits/error_constants.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/ext/atomicity.h \
@@ -362,7 +366,6 @@ CMakeFiles/MobileStreamDeck.dir/src/service/StreamDeckService.cpp.obj: \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/stl_tempbuf.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/stl_raw_storage_iter.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/align.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/unique_ptr.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/shared_ptr.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/shared_ptr_base.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/typeinfo \
@@ -377,9 +380,18 @@ CMakeFiles/MobileStreamDeck.dir/src/service/StreamDeckService.cpp.obj: \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/backward/auto_ptr.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/pstl/glue_memory_defs.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/pstl/execution_defs.h \
+ P:/Project/MobileStreamDeck/pc/src/manager/CommandManager.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/unordered_map \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/unordered_map.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/hashtable.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/hashtable_policy.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/enable_special_members.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/node_handle.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/erase_if.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/functional \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/std_function.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/array \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/compare \
  P:/Project/MobileStreamDeck/pc/src/utils/Logger.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/cstdarg \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/chrono \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/thread \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/std_thread.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/this_thread_sleep.h
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/chrono

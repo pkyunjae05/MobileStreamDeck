@@ -111,25 +111,9 @@ CMakeFiles/MobileStreamDeck.dir/src/main.cpp.obj: \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/cstdint \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdint.h \
  C:/mingw64/x86_64-w64-mingw32/include/stdint.h \
- P:\Project\MobileStreamDeck\pc\src\utils/Logger.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/cstdarg \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdarg.h \
- C:/mingw64/x86_64-w64-mingw32/include/stdarg.h \
- C:/mingw64/x86_64-w64-mingw32/include/_mingw_stdarg.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/chrono \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/chrono.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/ratio \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/limits \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/ctime \
- C:/mingw64/x86_64-w64-mingw32/include/time.h \
- C:/mingw64/x86_64-w64-mingw32/include/sys/timeb.h \
- C:/mingw64/x86_64-w64-mingw32/include/sec_api/sys/timeb_s.h \
- C:/mingw64/x86_64-w64-mingw32/include/_timeval.h \
- C:/mingw64/x86_64-w64-mingw32/include/pthread_time.h \
- C:/mingw64/x86_64-w64-mingw32/include/pthread_compat.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/parse_numbers.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/mutex \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/std_mutex.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/thread \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/std_thread.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/unique_ptr.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/x86_64-w64-mingw32/bits/gthr.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/x86_64-w64-mingw32/bits/gthr-default.h \
  C:/mingw64/x86_64-w64-mingw32/include/pthread.h \
@@ -138,8 +122,28 @@ CMakeFiles/MobileStreamDeck.dir/src/main.cpp.obj: \
  C:/mingw64/x86_64-w64-mingw32/include/corecrt_startup.h \
  C:/mingw64/x86_64-w64-mingw32/include/signal.h \
  C:/mingw64/x86_64-w64-mingw32/include/pthread_signal.h \
+ C:/mingw64/x86_64-w64-mingw32/include/time.h \
+ C:/mingw64/x86_64-w64-mingw32/include/sys/timeb.h \
+ C:/mingw64/x86_64-w64-mingw32/include/sec_api/sys/timeb_s.h \
+ C:/mingw64/x86_64-w64-mingw32/include/_timeval.h \
+ C:/mingw64/x86_64-w64-mingw32/include/pthread_time.h \
+ C:/mingw64/x86_64-w64-mingw32/include/pthread_compat.h \
  C:/mingw64/x86_64-w64-mingw32/include/sched.h \
  C:/mingw64/x86_64-w64-mingw32/include/pthread_unistd.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/this_thread_sleep.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/chrono.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/ratio \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/limits \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/ctime \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/parse_numbers.h \
+ P:\Project\MobileStreamDeck\pc\src\utils/Logger.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/cstdarg \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdarg.h \
+ C:/mingw64/x86_64-w64-mingw32/include/stdarg.h \
+ C:/mingw64/x86_64-w64-mingw32/include/_mingw_stdarg.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/chrono \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/mutex \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/std_mutex.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/bits/unique_lock.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/x86_64-w64-mingw32/bits/error_constants.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/ext/atomicity.h \

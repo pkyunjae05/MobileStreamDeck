@@ -1,19 +1,20 @@
 #include "StreamDeckService.h"
-#include "../manager/UsbManager.h"
-#include "../manager/CommandManager.h"
+#include "../core/UsbManager.h"
+#include "../core/CommandManager.h"
+#include "../transport/PipeTransport.h"
 #include "../utils/Logger.h"
 
 StreamDeckService::StreamDeckService() = default;
-
-StreamDeckService::~StreamDeckService() {
-    shutdown();
-}
+StreamDeckService::~StreamDeckService() { shutdown(); }
 
 bool StreamDeckService::initialize() {
+    m_pipeTransport = std::make_shared<transport::PipeTransport>();
+    m_pipeTransport->addMessageObserver(this);
+    m_pipeTransport->addConnectionObserver(this);
+
     auto& usb = UsbManager::getInstance();
-    
     usb.addConnectionObserver(this);
-    usb.addMessageObserver(this);
+    usb.attachPipe(m_pipeTransport);
 
     if (!usb.initialize()) {
         LOG_ERROR("UsbManager init failed");
@@ -21,30 +22,27 @@ bool StreamDeckService::initialize() {
     }
 
     CommandManager::getInstance().initialize();
-    
     return true;
 }
 
 void StreamDeckService::shutdown() {
     auto& usb = UsbManager::getInstance();
     usb.removeConnectionObserver(this);
-    usb.removeMessageObserver(this);
     usb.shutdown();
+
+    if (m_pipeTransport) {
+        m_pipeTransport->requestStop();
+        m_pipeTransport->waitForExit();
+    }
 }
 
 bool StreamDeckService::connect() {
-    auto& usb = UsbManager::getInstance();
     LOG_INFO("Starting USB connection...");
-    
-    if (usb.connectToDevice()) {
-        return true;
-    }
-    return false;
+    return UsbManager::getInstance().connectToDevice();
 }
 
 void StreamDeckService::disconnect() {
-    auto& usb = UsbManager::getInstance();
-    usb.disconnect();
+    UsbManager::getInstance().disconnect();
     LOG_INFO("Disconnected by user");
 }
 
@@ -58,36 +56,42 @@ void StreamDeckService::findDevices() {
 }
 
 bool StreamDeckService::sendMessage(const std::string& text) {
-    if (!isConnected()) {
+    if (!isConnected() || !m_pipeTransport) {
         LOG_WARN("Not connected; message not sent");
         return false;
     }
 
-    if (!UsbManager::getInstance().sendMessage(text)) {
+    if (!m_pipeTransport->send(reinterpret_cast<const uint8_t*>(text.data()), text.size())) {
         LOG_ERROR("Send failed");
         return false;
-    } 
-    
-    LOG_INFO("Sent bytes=%zu", text.size());
+    }
+
+    LOG_INFO("Enqueued bytes=%zu", text.size());
+    return true;
+}
+
+bool StreamDeckService::handleHandshake(const std::string& text) {
+    if (text.find(HELLO_FROM_ANDROID) == std::string::npos) {
+        return false;
+    }
+
+    LOG_INFO("Handshake signal received from Android! Sending PC response...");
+    sendMessage(HELLO_FROM_PC);
     return true;
 }
 
 void StreamDeckService::onConnected(const std::string& deviceInfo) {
+    m_pipeTransport->start();
     LOG_INFO("SERVICE CONNECTED: %s", deviceInfo.c_str());
     LOG_INFO("Waiting for handshake signal from Android app...");
-    // PC는 여기서 무리하게 sendMessage를 하지 않고 안드로이드의 신호를 기다립니다.
 }
 
 void StreamDeckService::onMessageReceived(const std::vector<uint8_t>& data) {
     std::string text(data.begin(), data.end());
     LOG_INFO("SERVICE RECV bytes=%zu text=%s", data.size(), text.c_str());
 
-    // 안드로이드가 보낸 초기 신호를 감지한 경우
-    if (text.find("HELLO_ANDROID") != std::string::npos) {
-        LOG_INFO("Handshake signal received from Android! Sending PC response...");
-        
-        // 즉시 응답 전송
-        sendMessage("HELLO_PC_FROM_APP");
+    if (handleHandshake(text)) {
+        return;
     }
 
     if (!CommandManager::getInstance().dispatch(text)) {
@@ -97,6 +101,7 @@ void StreamDeckService::onMessageReceived(const std::vector<uint8_t>& data) {
 
 void StreamDeckService::onDisconnected(const std::string& reason) {
     LOG_WARN("SERVICE DISCONNECTED: %s", reason.c_str());
+    UsbManager::getInstance().disconnect();
 }
 
 void StreamDeckService::onError(int errorCode, const std::string& message) {

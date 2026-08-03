@@ -26,30 +26,34 @@ message(STATUS "Compiler  : ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSIO
 message(STATUS "libusb inc: ${LIBUSB_INCLUDE_DIR}")
 message(STATUS "libusb lib: ${LIBUSB_LIBRARY}")
 
-# --- 변경된 구조에 맞게 소스 파일 목록 업데이트 ---
 set(SOURCES
     src/main.cpp
-    src/manager/UsbManager.cpp
-    src/manager/CommandManager.cpp
+    src/core/UsbManager.cpp
+    src/core/CommandManager.cpp
     src/protocol/AoaProtocol.cpp
     src/service/StreamDeckService.cpp
+    src/transport/Transport.cpp
+    src/transport/PipeTransport.cpp
     src/transport/UsbTransport.cpp
     src/utils/PlatformLauncher.cpp
 )
 
-# --- 변경된 구조에 맞게 헤더 파일 목록 업데이트 ---
 set(HEADERS
     src/interface/IConnectionObserver.h
     src/interface/IMessageObserver.h
-    src/manager/UsbManager.h
-    src/manager/CommandManager.h
+    src/core/UsbManager.h
+    src/core/CommandManager.h
     src/protocol/AoaConstants.h
     src/protocol/AoaProtocol.h
     src/service/StreamDeckService.h
+    src/transport/TransportInputOutput.h
     src/transport/UsbTransport.h
+    src/transport/Transport.h
+    src/transport/PipeTransport.h
     src/utils/Logger.h
     src/utils/PlatformLauncher.h
 )
+
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 

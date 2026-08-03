@@ -1,25 +1,64 @@
 # MobileStreamDeck
 
-스마트폰을 유선/무선으로 연결하여 PC를 제어하는 커스텀 스트림 덱(Stream Deck) 프로젝트입니다.  
+This is a custom Stream Deck project that controls a PC by connecting a smartphone via a wired or wireless connection.
 
 
-## 기술 스택 (Tech Stack)
+# Setup
 
-- PC (Server): C++ (libusb)
-- Android (Client): Java ()
-- Development Environment: Visual Studio Code (VS Code)
+## PC
 
----
+### 1. WinUSB Driver Installation (Windows Only)
+You only need to install the WinUSB driver the **first time** your device switches to AOA mode.
 
-## 📂 프로젝트 구조 (Directory Structure)
+1. Download [Zadig](https://zadig.akeo.ie/).
+2. Connect your Android device to your PC via USB.
+3. Run `StreamDeckPC` and attempt a handshake (the device will switch to AOA mode).
+4. Open Zadig, go to **Options**, and check **List All Devices**.
+5. Select `Android Accessory` (VID: 18D1, PID: 2D01) from the dropdown.
+6. Set the target driver to **WinUSB**, then click **Install/Replace Driver**.
 
-```text
-my-mobile-streamdeck/
-├── pc-server/            # C++ 기반 Windows 백그라운드 서버 프로그램
-└── android-client/       # Java 기반 안드로이드 스트림덱 앱 프로젝트
+### 2. Build
+Configure and build the project using CMake:
 
-## 프로젝트 로드맵
-- [x] 프로젝트 초기 환경 세팅 및 구조 설계
-- [x] `libusb` 기반 안드로이드 디바이스 탐색 (PC)
-- [x] pc <-> app read/write 확인
-- [x] app -> pc 아이콘 클릭 하여 명령어 보내기
+bash
+cmake -B build -S . -DCMAKE_BUILD_TYPE=Debug
+cmake --build build --config Debug
+
+### 3. Run
+
+build\StreamDeckPC.exe
+
+## Android
+
+### 1. Build
+Build the project to generate the APK.
+
+### 2. Install
+Transfer and install the APK onto your Android device.
+
+# Directory Structure
+
+MobileStreamDeck/
+├── pc(server)/
+└── android(client)/
+
+pc/src/
+├── core/
+│   ├── UsbManager.h/.cpp
+│   ├── CommandManager.h/.cpp
+├── service/
+│   └── StreamDeckService.h/.cpp
+├── transport/
+│   ├── TransportInputOutput.h
+│   ├── Transport.h/.cpp
+│   ├── PipeTransport.h/.cpp
+│   └── UsbTransport.h/.cpp
+├── protocol/
+│   ├── AoaConstants.h
+│   └── AoaProtocol.h/.cpp
+├── interface/
+│   ├── IConnectionObserver.h
+│   └── IMessageObserver.h
+└── utils/
+    ├── Logger.h
+    └── PlatformLauncher.h/.cpp

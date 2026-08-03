@@ -12,9 +12,7 @@ static void onSigInt(int) { g_loop.store(false); }
 static void printHelp() {
     std::cout
         << "\nCommands:\n"
-        << "  /help         show help\n"
-        << "  /status       connection status\n"
-        << "  /find         scan and list Android devices\n" // <-- Added
+        << "  /find         scan and list Android devices\n"
         << "  /connect      start connection now\n"
         << "  /disconnect   disconnect\n"
         << "  /quit         exit\n"
@@ -25,8 +23,7 @@ int main() {
     std::signal(SIGINT, onSigInt);
 
     std::cout << "===============================================\n";
-    std::cout << "MobileStreamDeck PC - Phase 1 PoC (Refactored)\n";
-    std::cout << "No hotplug. Connection starts on /connect.\n";
+    std::cout << "             MobileStreamDeck PC               \n";
     std::cout << "===============================================\n\n";
 
     StreamDeckService service;
@@ -46,16 +43,8 @@ int main() {
         if (!std::getline(std::cin, line)) break;
         if (line.empty()) continue;
 
-        if (line == "/help") {
-            printHelp();
-            continue;
-        }
         if (line == "/quit") {
             break;
-        }
-        if (line == "/status") {
-            LOG_INFO("connected=%s", service.isConnected() ? "YES" : "NO");
-            continue;
         }
         if (line == "/connect") {
             bool ok = service.connect();

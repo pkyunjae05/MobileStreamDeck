@@ -1,3 +1,0 @@
-P:/MyProject/MobileStreamDeck/pc/build/CMakeFiles/MobileStreamDeck.dir
-P:/MyProject/MobileStreamDeck/pc/build/CMakeFiles/edit_cache.dir
-P:/MyProject/MobileStreamDeck/pc/build/CMakeFiles/rebuild_cache.dir

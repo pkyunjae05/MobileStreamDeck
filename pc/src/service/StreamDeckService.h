@@ -16,7 +16,8 @@ public:
     bool initialize();
     void shutdown();
 
-    bool connect();
+    bool wiredConnect();
+    bool wirelessConnect();
     void disconnect();
     void findDevices();
     bool isConnected() const;

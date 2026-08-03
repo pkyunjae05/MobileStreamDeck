@@ -42,17 +42,24 @@ MobileStreamDeck/
 ├── pc(server)/
 └── android(client)/
 
+## 폴더 구조
+
+### PC (`pc/src/`)
+
+```text
 pc/src/
 ├── core/
 │   ├── UsbManager.h/.cpp
-│   ├── CommandManager.h/.cpp
+│   ├── TcpManager.h/.cpp
+│   └── CommandManager.h/.cpp
 ├── service/
 │   └── StreamDeckService.h/.cpp
 ├── transport/
 │   ├── TransportInputOutput.h
 │   ├── Transport.h/.cpp
 │   ├── PipeTransport.h/.cpp
-│   └── UsbTransport.h/.cpp
+│   ├── UsbTransport.h/.cpp
+│   └── TcpTransport.h/.cpp
 ├── protocol/
 │   ├── AoaConstants.h
 │   └── AoaProtocol.h/.cpp
@@ -62,3 +69,24 @@ pc/src/
 └── utils/
     ├── Logger.h
     └── PlatformLauncher.h/.cpp
+```
+
+### Android (`app/src/main/`)
+
+```text
+app/src/main/
+├── java/com/pkj/app/streamdeckcontroller/
+│   ├── MainActivity.java
+│   ├── usb/
+│   │   └── AoaCommunicationManager.java
+│   └── tcp/
+│       └── tcpCommunicator.java
+├── res/
+│   ├── layout/
+│   │   └── activity_main.xml
+│   ├── values/
+│   │   └── strings.xml
+│   └── drawable/
+│       └── ic_action_play.xml
+└── AndroidManifest.xml
+```

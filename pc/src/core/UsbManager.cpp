@@ -162,6 +162,10 @@ bool UsbManager::connectToDevice() {
 void UsbManager::disconnect() {
     std::lock_guard<std::mutex> lk(m_connectMutex);
 
+    if (m_pipe && m_usbIo) {
+        m_pipe->clearTransportIo(m_usbIo);
+    }
+
     if (m_pipe) {
         m_pipe->setTransportIo(nullptr);
     }
@@ -193,7 +197,7 @@ void UsbManager::scanDevices() {
     }
 
     LOG_INFO("==================================================");
-    LOG_INFO("            SCANNING FOR ANDROID DEVICES          ");
+    LOG_INFO("            SCANNING FOR WIRED DEVICES          ");
     LOG_INFO("==================================================");
 
     int androidDeviceCount = 0;

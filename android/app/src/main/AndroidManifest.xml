@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- 1. AOA(USB 액세서리) 하드웨어 기능 사용 선언 (필수) -->
     <uses-feature android:name="android.hardware.usb.accessory" android:required="true" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -16,24 +16,20 @@
         android:theme="@style/Theme.StreamDeckController"
         tools:targetApi="31">
 
-        <!-- 2. USB 연결 이벤트 및 앱 실행을 모두 담당하는 MainActivity -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop">
 
-            <!-- 앱 아이콘을 눌러서 실행할 때 -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <!-- 3. USB 액세서리가 연결될 때 MainActivity를 호출하는 필터 -->
             <intent-filter>
                 <action android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED" />
             </intent-filter>
 
-            <!-- 4. PC의 정보와 일치하는 기기만 필터링 -->
             <meta-data
                 android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED"
                 android:resource="@xml/accessory_filter" />

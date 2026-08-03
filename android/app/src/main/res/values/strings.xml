@@ -3,4 +3,8 @@
 
     <string name="action_label_youtube">YouTube</string>
     <string name="action_command_youtube">Youtube</string>
+
+    <string name="hint_ip_address">PC IP 주소 입력</string>
+    <string name="default_pc_ip">172.30.1.79</string>
+    <string name="action_connect">연결</string>
 </resources>

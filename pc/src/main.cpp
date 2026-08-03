@@ -12,11 +12,12 @@ static void onSigInt(int) { g_loop.store(false); }
 static void printHelp() {
     std::cout
         << "\nCommands:\n"
-        << "  /find         scan and list Android devices\n"
-        << "  /connect      start connection now\n"
-        << "  /disconnect   disconnect\n"
-        << "  /quit         exit\n"
-        << "  <text>        send text (only when connected)\n\n";
+        << "  /find             scan and list Android devices\n"
+        << "  /wired            start wired connection now\n"
+        << "  /wireless         start wireless connection now\n"
+        << "  /disconnect       disconnect\n"
+        << "  /quit             exit\n"
+        << "  <text>            send text (only when connected)\n\n";
 }
 
 int main() {
@@ -46,8 +47,13 @@ int main() {
         if (line == "/quit") {
             break;
         }
-        if (line == "/connect") {
-            bool ok = service.connect();
+        if (line == "/wired") {
+            bool ok = service.wiredConnect();
+            LOG_INFO("Service Connect=%s", ok ? "OK" : "FAIL");
+            continue;
+        }
+        if (line == "/wireless") {
+            bool ok = service.wirelessConnect();
             LOG_INFO("Service Connect=%s", ok ? "OK" : "FAIL");
             continue;
         }

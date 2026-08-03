@@ -14,9 +14,9 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-public class AoaCommunicationManager {
+public class usbCommunicator {
     private static final String TAG = "AoaCommunicationManager";
-    private static final AoaCommunicationManager instance = new AoaCommunicationManager();
+    private static final usbCommunicator instance = new usbCommunicator();
 
     private UsbManager usbManager;
     private ParcelFileDescriptor fileDescriptor;
@@ -27,16 +27,10 @@ public class AoaCommunicationManager {
     private Thread handshakeThread;
     private volatile boolean isConnected = false;
     private volatile boolean isHandshakeCompleted = false;
-
-    // [FIX] 기존 sendCommand()는 호출될 때마다 새 Thread를 생성해서 write()를 실행했음.
-    //       HELLO_ANDROID 반복 전송 스레드와 실제 write 스레드가 동시에 여러 개 뜰 수 있어
-    //       synchronized 키워드가 사실상 무의미했고, write 순서 보장도 안 됐음.
-    //       단일 writer 스레드 + 큐 구조로 교체해 전송을 직렬화함.
     private final BlockingQueue<String> sendQueue = new ArrayBlockingQueue<>(32);
+    private usbCommunicator() {}
 
-    private AoaCommunicationManager() {}
-
-    public static AoaCommunicationManager getInstance() {
+    public static usbCommunicator getInstance() {
         return instance;
     }
 
@@ -62,9 +56,6 @@ public class AoaCommunicationManager {
                 while (isConnected && !isHandshakeCompleted) {
                     sendCommand("HELLO_ANDROID");
                     try {
-                        // [FIX] PC 쪽 재열거~claim_interface 완료까지 로그 상 약 5.7초가 걸렸음.
-                        //       500ms 간격으로 계속 write()를 시도하면 PC가 아직 읽지 않는 상태에서
-                        //       송신 버퍼가 계속 쌓일 수 있어 간격을 늘림.
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         break;
@@ -122,8 +113,6 @@ public class AoaCommunicationManager {
                     outputStream.flush();
                     long elapsed = System.currentTimeMillis() - start;
 
-                    // [ADD] write()가 비정상적으로 오래 걸리면(호스트가 아직 안 읽는 상태)
-                    //       원인 파악을 위해 반드시 로그로 남김.
                     if (elapsed > 300) {
                         Log.w(TAG, "write() took " + elapsed + "ms - host may not be reading yet");
                     }
@@ -152,8 +141,7 @@ public class AoaCommunicationManager {
             Log.w(TAG, "Cannot send command: Not connected");
             return;
         }
-        // [FIX] 큐가 가득 차면 버리고 경고만 남김(예전처럼 write용 스레드가 무한 누적되는 것 방지)
-        if (!sendQueue.offer(message)) {
+       if (!sendQueue.offer(message)) {
             Log.w(TAG, "Send queue full, dropping message: " + message);
         }
     }

@@ -5,12 +5,22 @@ namespace transport {
 
 void PipeTransport::setTransportIo(std::shared_ptr<TransportInputOutput> transportIo) {
     std::lock_guard<std::mutex> lock(mIoMutex);
-    if (transportIo == nullptr) {
-        LOG_WARN("setTransportIo: transportIo is null (channel detached)");
-    } else {
-        LOG_INFO("setTransportIo: new channel attached");
+    
+    if (mTransportIo != nullptr) {
+        mTransportIo = nullptr;
     }
+
     mTransportIo = std::move(transportIo);
+}
+
+void PipeTransport::clearTransportIo(const std::shared_ptr<TransportInputOutput>& expected) {
+    std::lock_guard<std::mutex> lock(mIoMutex);
+    if (mTransportIo == expected) {
+        mTransportIo = nullptr;
+        LOG_INFO("PipeTransport: channel cleared (matched expected instance).");
+    } else {
+        LOG_INFO("PipeTransport: clear skipped (channel already replaced by another transport).");
+    }
 }
 
 void PipeTransport::abortReads() {

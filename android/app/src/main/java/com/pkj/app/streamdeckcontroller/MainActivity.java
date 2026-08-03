@@ -7,16 +7,19 @@ import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.pkj.app.streamdeckcontroller.usb.AoaCommunicationManager;
+import com.pkj.app.streamdeckcontroller.tcp.tcpCommunicator;
+import com.pkj.app.streamdeckcontroller.usb.usbCommunicator;
 
 public class MainActivity extends Activity {
     private static final String TAG = "MainActivity";
+    private static final int TCP_PORT = 9999;
+    private EditText ipAddressInput;
 
-    // [ADD] 버튼이 늘어나도 이 리스너 하나로 전부 처리.
-    //       클릭된 View의 tag(=전송할 명령 문자열)를 그대로 읽어 sendCommand()에 전달.
     private final View.OnClickListener actionClickListener = v -> {
         Object tag = v.getTag();
         if (!(tag instanceof String)) {
@@ -34,35 +37,69 @@ public class MainActivity extends Activity {
         Log.d(TAG, "MainActivity 생성됨 (onCreate)");
 
         bindActionButtons();
+        bindConnectButton();
         handleUsbIntent(getIntent());
     }
 
-    // [ADD] 액션 버튼들에 공용 리스너 연결.
-    //       버튼이 늘어나면 findViewById 한 줄만 추가하면 됨.
     private void bindActionButtons() {
         ImageButton youtubeButton = findViewById(R.id.btn_action_youtube);
         if (youtubeButton != null) {
             youtubeButton.setOnClickListener(actionClickListener);
         }
 
-        // [향후 확장 예시]
         // ImageButton spotifyButton = findViewById(R.id.btn_action_spotify);
         // if (spotifyButton != null) {
         //     spotifyButton.setOnClickListener(actionClickListener);
         // }
     }
 
-    // [ADD] 연결 상태를 확인한 뒤 명령을 전송하고, 결과를 사용자에게 즉시 피드백.
-    private void sendActionCommand(String command) {
-        AoaCommunicationManager manager = AoaCommunicationManager.getInstance();
+    // [ADD] 하단 IP 입력 + 연결 버튼 바인딩.
+    //       버튼 클릭 시 입력된 IP로 tcpCommunicator를 통해 PC(TcpManager)에 접속을 시도한다.
+    private void bindConnectButton() {
+        ipAddressInput = findViewById(R.id.et_ip_address);
+        Button connectButton = findViewById(R.id.btn_connect);
+        if (connectButton == null) return;
 
-        if (!manager.isConnected()) {
+        connectButton.setOnClickListener(v -> {
+            String ip = ipAddressInput.getText().toString().trim();
+            if (ip.isEmpty()) {
+                Toast.makeText(this, "IP 주소를 입력하세요.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Toast.makeText(this, ip + " 로 연결 시도 중...", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "TCP 연결 시도: " + ip + ":" + TCP_PORT);
+
+            tcpCommunicator.getInstance().connect(ip, TCP_PORT, new tcpCommunicator.ConnectionCallback() {
+                @Override
+                public void onConnected() {
+                    runOnUiThread(() ->
+                            Toast.makeText(MainActivity.this, "연결 성공: " + ip, Toast.LENGTH_SHORT).show());
+                }
+
+                @Override
+                public void onConnectFailed(String reason) {
+                    runOnUiThread(() ->
+                            Toast.makeText(MainActivity.this, "연결 실패: " + reason, Toast.LENGTH_SHORT).show());
+                }
+            });
+        });
+    }
+
+    private void sendActionCommand(String command) {
+        usbCommunicator aoaManager = usbCommunicator.getInstance();
+        tcpCommunicator tcpManager = tcpCommunicator.getInstance();
+
+        if (aoaManager.isConnected()) {
+            aoaManager.sendCommand(command);
+        } else if (tcpManager.isConnected()) {
+            tcpManager.sendCommand(command);
+        } else {
             Log.w(TAG, "PC와 연결되어 있지 않아 명령을 전송할 수 없습니다: " + command);
             Toast.makeText(this, "PC와 연결되어 있지 않습니다.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        manager.sendCommand(command);
         Log.d(TAG, "명령 전송 요청: " + command);
         Toast.makeText(this, command + " 전송됨", Toast.LENGTH_SHORT).show();
     }
@@ -84,8 +121,7 @@ public class MainActivity extends Activity {
             if (accessory != null) {
                 Log.d(TAG, "PC(AOA 장치) 감지됨: " + accessory.getModel());
 
-                // 싱글톤 매니저를 통해 Accessory Open!
-                AoaCommunicationManager.getInstance().openAccessory(this, accessory);
+                usbCommunicator.getInstance().openAccessory(this, accessory);
             }
         }
     }
@@ -94,5 +130,7 @@ public class MainActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "MainActivity 종료됨 (onDestroy)");
+
+        tcpCommunicator.getInstance().closeConnection();
     }
 }

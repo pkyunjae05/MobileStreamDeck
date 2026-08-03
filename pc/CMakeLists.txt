@@ -30,11 +30,13 @@ set(SOURCES
     src/main.cpp
     src/core/UsbManager.cpp
     src/core/CommandManager.cpp
+    src/core/TcpManager.cpp
     src/protocol/AoaProtocol.cpp
     src/service/StreamDeckService.cpp
     src/transport/Transport.cpp
     src/transport/PipeTransport.cpp
     src/transport/UsbTransport.cpp
+    src/transport/TcpTransport.cpp
     src/utils/PlatformLauncher.cpp
 )
 
@@ -42,6 +44,7 @@ set(HEADERS
     src/interface/IConnectionObserver.h
     src/interface/IMessageObserver.h
     src/core/UsbManager.h
+    src/core/TcpManager.h
     src/core/CommandManager.h
     src/protocol/AoaConstants.h
     src/protocol/AoaProtocol.h
@@ -50,6 +53,7 @@ set(HEADERS
     src/transport/UsbTransport.h
     src/transport/Transport.h
     src/transport/PipeTransport.h
+    src/transport/TcpTransport.h
     src/utils/Logger.h
     src/utils/PlatformLauncher.h
 )

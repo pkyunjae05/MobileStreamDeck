@@ -12,6 +12,7 @@ public:
     ~PipeTransport() override { mTransportIo = nullptr; }
 
     void setTransportIo(std::shared_ptr<TransportInputOutput> transportIo);
+    void clearTransportIo(const std::shared_ptr<TransportInputOutput>& expected);
 
 protected:
     void abortReads() override;

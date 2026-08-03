@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    [설계 의도]
-    - GridLayout으로 구성해 향후 버튼이 늘어나도 rowCount/columnCount만 조정하면 됨
-    - 각 버튼(ImageButton)의 android:tag 에 "PC로 전송할 명령 문자열"을 그대로 넣음
-      -> MainActivity의 공용 클릭 리스너가 이 tag 값을 읽어 그대로 전송
-      -> 버튼이 추가될 때 Java 코드 수정 없이 XML만 추가하면 되는 구조
--->
+
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#121212"
     android:columnCount="3"
-    android:rowCount="4"
+    android:rowCount="5"
     android:padding="16dp"
     android:alignmentMode="alignBounds"
     android:useDefaultMargins="true">
@@ -20,6 +14,8 @@
         android:id="@+id/btn_action_youtube"
         android:layout_width="72dp"
         android:layout_height="72dp"
+        android:layout_row="0"
+        android:layout_column="0"
         android:src="@drawable/ic_action_play"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
@@ -33,8 +29,47 @@
 
         <ImageButton
             android:id="@+id/btn_action_spotify"
+            android:layout_row="0"
+            android:layout_column="1"
             ...
             android:tag="Spotify" />
     -->
+
+    <!-- [ADD] 하단 IP 입력 + 연결 버튼 영역. 그리드 3칸을 전부 차지하는 마지막 행에 배치. -->
+    <LinearLayout
+        android:layout_row="4"
+        android:layout_column="0"
+        android:layout_columnSpan="3"
+        android:layout_gravity="fill_horizontal"
+        android:orientation="horizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/et_ip_address"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="2"
+            android:layout_marginEnd="8dp"
+            android:hint="@string/hint_ip_address"
+            android:text="@string/default_pc_ip"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#888888"
+            android:inputType="text"
+            android:singleLine="true"
+            android:background="#1E1E1E"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp" />
+
+        <Button
+            android:id="@+id/btn_connect"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="@string/action_connect"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#2563EB" />
+
+    </LinearLayout>
 
 </GridLayout>

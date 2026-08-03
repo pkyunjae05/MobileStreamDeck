@@ -1,5 +1,6 @@
 #include "StreamDeckService.h"
 #include "../core/UsbManager.h"
+#include "../core/TcpManager.h"
 #include "../core/CommandManager.h"
 #include "../transport/PipeTransport.h"
 #include "../utils/Logger.h"
@@ -21,14 +22,25 @@ bool StreamDeckService::initialize() {
         return false;
     }
 
+    auto& tcp = TcpManager::getInstance();
+    tcp.addConnectionObserver(this);
+    tcp.attachPipe(m_pipeTransport);
+
+    if (!tcp.initialize()) {
+        LOG_ERROR("TcpManager init failed");
+        return false;
+    }
+
     CommandManager::getInstance().initialize();
     return true;
 }
 
 void StreamDeckService::shutdown() {
-    auto& usb = UsbManager::getInstance();
-    usb.removeConnectionObserver(this);
-    usb.shutdown();
+    UsbManager::getInstance().removeConnectionObserver(this);
+    UsbManager::getInstance().shutdown();
+
+    TcpManager::getInstance().removeConnectionObserver(this);
+    TcpManager::getInstance().shutdown();     
 
     if (m_pipeTransport) {
         m_pipeTransport->requestStop();
@@ -36,22 +48,25 @@ void StreamDeckService::shutdown() {
     }
 }
 
-bool StreamDeckService::connect() {
-    LOG_INFO("Starting USB connection...");
+bool StreamDeckService::wiredConnect() {
     return UsbManager::getInstance().connectToDevice();
+}
+
+bool StreamDeckService::wirelessConnect() {
+    return TcpManager::getInstance().startListening(9999);
 }
 
 void StreamDeckService::disconnect() {
     UsbManager::getInstance().disconnect();
+    TcpManager::getInstance().disconnect();
     LOG_INFO("Disconnected by user");
 }
 
 bool StreamDeckService::isConnected() const {
-    return UsbManager::getInstance().isConnected();
+    return UsbManager::getInstance().isConnected() || TcpManager::getInstance().isConnected();
 }
 
 void StreamDeckService::findDevices() {
-    LOG_INFO("Triggering USB device scan for Android devices...");
     UsbManager::getInstance().scanDevices();
 }
 
@@ -102,6 +117,7 @@ void StreamDeckService::onMessageReceived(const std::vector<uint8_t>& data) {
 void StreamDeckService::onDisconnected(const std::string& reason) {
     LOG_WARN("SERVICE DISCONNECTED: %s", reason.c_str());
     UsbManager::getInstance().disconnect();
+    TcpManager::getInstance().disconnect();
 }
 
 void StreamDeckService::onError(int errorCode, const std::string& message) {
